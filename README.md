@@ -4,7 +4,11 @@
 mikehock/buildkite-agent-aws-kube:latest
 ```
 
-This is a simple docker image which bundles the `aws` and `kubectl` cli tools inside the buildkite agent container.
+This is a simple docker image which bundles a few extra utilities into the buildkite agent.
+
+- `aws`
+- `kubectl`
+- `yq` (yaml processor)
 
 ## Configuring AWS
 
