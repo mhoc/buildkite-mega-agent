@@ -1,4 +1,4 @@
-FROM buildkite/agent:latest
+FROM buildkite/agent:3.6.1-ubuntu
 WORKDIR /setup
 
 RUN apt-get update && apt-get upgrade -y
@@ -34,6 +34,10 @@ RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add 
 RUN wget -O kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64 \
   && chmod +x ./kops \
   && mv ./kops /usr/local/bin/
+
+# eksctl
+RUN curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp \
+  && mv /tmp/eksctl /usr/local/bin
 
 # yq (a command line yaml processor)
 RUN add-apt-repository ppa:rmescandon/yq \
