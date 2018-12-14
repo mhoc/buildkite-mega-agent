@@ -24,11 +24,9 @@ RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud
 ENV PATH="/setup/google-cloud-sdk/bin:${PATH}"
 
 # kubectl
-RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
-  && touch /etc/apt/sources.list.d/kubernetes.list \
-  && echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list \
-  && apt-get update \
-  && apt-get install -y kubectl
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+  && chmod +x ./kubectl \
+  && mv ./kubectl /usr/local/bin/kubectl
 
 # kops
 RUN wget -O kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64 \
