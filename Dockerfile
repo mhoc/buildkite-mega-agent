@@ -52,6 +52,7 @@ RUN curl -s https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz -o go.tar.gz \
   && tar -C /usr/local -xzf go.tar.gz
 ENV PATH="/usr/local/go/bin:${PATH}"
 ENV GOPATH="/root/go"
+ENV PATH="${GOPATH}/bin:${PATH}"
 
 # Protoc + a bunch of plugins
 RUN apt-get install -y protobuf-compiler \

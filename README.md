@@ -1,7 +1,7 @@
 # BuildKite Mega Agent
 
 ```
-mikehock/buildkite-mega-agent:6
+mikehock/buildkite-mega-agent:6.1
 ```
 
 This is a docker image based on `buildkite-agent:latest` which adds a whole bunch of utilities 
