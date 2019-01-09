@@ -1,4 +1,4 @@
-FROM buildkite/agent:3.6.1-ubuntu
+FROM buildkite/agent:3.7.0-ubuntu
 WORKDIR /setup
 
 RUN apt-get update && apt-get upgrade -y
@@ -42,7 +42,19 @@ RUN add-apt-repository ppa:rmescandon/yq \
   && apt-get update \
   && apt install yq -y
 
+# aws-iam-authenticator
+RUN wget -O aws-iam-authenticator "https://amazon-eks.s3-us-west-2.amazonaws.com/1.11.5/2018-12-06/bin/linux/amd64/aws-iam-authenticator" \
+  && chmod +x ./aws-iam-authenticator \
+  && mv ./aws-iam-authenticator /usr/local/bin/
+
 # Golang!
-RUN curl -s https://dl.google.com/go/go1.11beta3.linux-amd64.tar.gz -o go.tar.gz \
+RUN curl -s https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz -o go.tar.gz \
   && tar -C /usr/local -xzf go.tar.gz
 ENV PATH="/usr/local/go/bin:${PATH}"
+ENV GOPATH="/root/go"
+
+# Protoc + a bunch of plugins
+RUN apt-get install -y protobuf-compiler \
+  && go get -u github.com/golang/protobuf/protoc-gen-go \
+  && go get -u github.com/twitchtv/twirp/protoc-gen-twirp \
+  && go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
