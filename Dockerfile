@@ -23,6 +23,9 @@ RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud
   && sh ./google-cloud-sdk/install.sh
 ENV PATH="/setup/google-cloud-sdk/bin:${PATH}"
 
+# helm
+RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
+
 # kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
   && chmod +x ./kubectl \
