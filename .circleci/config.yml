@@ -2,12 +2,11 @@ version: 2
 jobs:
   build:
     docker:
-      - image: debian:stretch
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
+      - setup_remote_docker
       - run:
-          name: Greeting
-          command: echo Hello, world.
-      - run:
-          name: Print the Current Time
-          command: date
+        name: build docker image
+        command: |
+          docker build -t app .
