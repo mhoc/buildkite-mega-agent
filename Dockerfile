@@ -10,18 +10,15 @@ RUN apt-get update && apt-get upgrade -y
 # software-properties-common (includes add-apt-repository)
 # build-essential (make!)
 # jq (command line json processor)
-RUN apt-get install -y gnupg wget python unzip software-properties-common build-essential jq
+RUN apt-get install -y gnupg wget python python-pip unzip software-properties-common build-essential jq
 
 # aws-cli
 RUN curl https://s3.amazonaws.com/aws-cli/awscli-bundle.zip -o awscli-bundle.zip \
   && unzip awscli-bundle.zip \
   && ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
-# gcloud
-RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-210.0.0-linux-x86_64.tar.gz -o gcloud.tar.gz \
-  && tar -C /setup -xzf gcloud.tar.gz \
-  && sh ./google-cloud-sdk/install.sh
-ENV PATH="/setup/google-cloud-sdk/bin:${PATH}"
+# aws sam
+RUN pip install aws-sam-cli
 
 # helm
 RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
