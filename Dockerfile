@@ -10,7 +10,7 @@ RUN apt-get update && apt-get upgrade -y
 # software-properties-common (includes add-apt-repository)
 # build-essential (make!)
 # jq (command line json processor)
-RUN apt-get install -y gnupg wget python python-pip unzip software-properties-common build-essential jq
+RUN apt-get install -y gnupg wget python python-pip unzip software-properties-common build-essential jq curl
 
 # aws-cli
 RUN curl https://s3.amazonaws.com/aws-cli/awscli-bundle.zip -o awscli-bundle.zip \
@@ -59,3 +59,9 @@ RUN apt-get install -y protobuf-compiler \
   && go get -u github.com/golang/protobuf/protoc-gen-go \
   && go get -u github.com/twitchtv/twirp/protoc-gen-twirp \
   && go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
+
+# NodeJS
+RUN curl -sL https://deb.nodesource.com/setup_10.x -o install_node10x.sh \
+  && chmod +x ./install_node10x.sh \
+  && ./install_node10x.sh \
+  && apt-get install -y nodejs
